@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reopen Quickly</title>
+  <script>
+    let reopenedWindow;
+
+    function openNewWindow() {
+      // 새 창 열기
+      reopenedWindow = window.open(
+        '',
+        'reopenWindow',
+        'width=400,height=400'
+      );
+      if (reopenedWindow) {
+        reopenedWindow.document.write('<h1>이 창을 닫아도 0.01초 만에 다시 열립니다!</h1>');
+      } else {
+        alert('팝업 차단이 활성화되어 있습니다. 팝업 차단을 해제하세요.');
+      }
+    }
+
+    function monitorWindow() {
+      // 창이 닫혔는지 감시
+      if (reopenedWindow && reopenedWindow.closed) {
+        openNewWindow(); // 창을 다시 열기
+      }
+      setTimeout(monitorWindow, 10); // 0.01초(10ms) 간격으로 확인
+    }
+
+    window.onload = function () {
+      openNewWindow(); // 페이지 로드 시 새 창 열기
+      monitorWindow(); // 창 상태 감시 시작
+    };
+  </script>
+</head>
+<body>
+  <h1>GitHub Pages Test</h1>
+  <p>이 페이지는 창이 닫히면 0.01초 간격으로 다시 열립니다.</p>
+</body>
+</html>
